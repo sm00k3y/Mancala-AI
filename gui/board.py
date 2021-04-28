@@ -7,7 +7,7 @@ class Board:
     def __init__(self):
         self.bg = pygame.image.load("gui/img/bg.png")
         self.pits = self._load_pits()
-        self.font = pygame.freetype.SysFont("DejaVu Sans", 30)
+        self.font = pygame.freetype.Font("gui/Comic Sans MS 400.ttf", 40)
     
     def _load_pits(self):
         pits = []
@@ -31,10 +31,9 @@ class Board:
 
         return pits 
 
-    def draw_board(self, win, top_player):
+    def draw_board(self, win):
         win.fill((0, 0, 0))
         win.blit(self.bg, (0, 0))
-        self._draw_text(win, top_player)
 
         marbles = []
         
@@ -44,8 +43,6 @@ class Board:
 
         for m in marbles:
             m.draw(win)
-
-        pygame.display.update()
 
     def move_marbles(self):
         for pit in self.pits:
@@ -57,7 +54,8 @@ class Board:
 
     def get_pit(self, pos, top_player):
         for pit in self.pits:
-            if not pit.is_basket and pit.top_player == top_player and pit.in_position(pos):
+            if (not pit.is_basket and pit.top_player == top_player 
+                and pit.in_position(pos) and pit.get_marbles_count() > 0):
                 return pit
         return None
 
@@ -68,7 +66,7 @@ class Board:
                     return False
         return True
 
-    def _draw_text(self, win, top_player):
+    def draw_text(self, win, top_player):
         text = "PLAYER TOP" if top_player else "PLAYER BOTTOM"
         basket_top = str(self.get_basket(True).get_marbles_count())
         basket_bot = str(self.get_basket(False).get_marbles_count())
@@ -80,3 +78,18 @@ class Board:
         for pit in self.pits:
             if pit.is_basket and pit.top_player == top_player:
                 return pit
+
+    def check_game_over(self, top_player):
+        pits = [pit for pit in self.pits if pit.top_player == top_player and not pit.is_basket]
+        for p in pits:
+            if p.get_marbles_count() > 0:
+                return False
+        return True
+
+    def draw_game_over(self, win):
+        basket_top = str(self.get_basket(True).get_marbles_count())
+        basket_bot = str(self.get_basket(False).get_marbles_count())
+        text = "GAME OVER, WINNER: PLAYER TOP" if basket_top > basket_bot else "GAME OVER, WINNER: PLAYER BOTTOM"
+        self.font.render_to(win, (530, 600), text, TEXT_COLOR)
+        self.font.render_to(win, (110, 600), basket_top, TEXT_COLOR)
+        self.font.render_to(win, (1390, 600), basket_bot, TEXT_COLOR)

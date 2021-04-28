@@ -12,17 +12,16 @@ class Game:
 
     def update(self):
         self.board.move_marbles()
-        self.board.draw_board(self.win, self.top_player)
+        self.board.draw_board(self.win)
+        self.board.draw_text(self.win, self.top_player)
+        pygame.display.update()
 
         if self.board.animation_finished():
             self.is_moving_anim = False
 
     def move(self, pos):
         if self.is_moving_anim == True:
-            print("NOPE")
             return
-
-        print("YEP")
         self.is_moving_anim = True
 
         # Find pit clicked by mouse
@@ -42,7 +41,7 @@ class Game:
         if not (last_pit.is_basket and last_pit.top_player == self.top_player):
             self.top_player = not self.top_player
 
-    # Moves marbles and returns last marble
+    # Moves marbles and returns last pit
     def move_marbles(self, pit):
         marbles = pit.get_marbles()
         pit.remove_marbles()
@@ -57,10 +56,20 @@ class Game:
         cond = (pit.top_player == self.top_player and pit.get_marbles_count() == 1 and
                 not pit.is_basket and pit.opposite_pit().get_marbles_count() != 0)
         if cond:
+            self.board.get_basket(self.top_player).add_marble(pit.get_marbles()[0])
+            pit.remove_marbles()
             opposite_pit = pit.opposite_pit()
             opposite_marbles = opposite_pit.get_marbles()
             opposite_pit.remove_marbles()
             for m in opposite_marbles:
                 self.board.get_basket(self.top_player).add_marble(m)
-            self.board.get_basket(self.top_player).add_marble(pit.get_marbles()[0])
+
+    def game_over(self):
+        return self.board.check_game_over(self.top_player)
+
+    def print_game_over(self):
+        self.board.move_marbles()
+        self.board.draw_board(self.win)
+        self.board.draw_game_over(self.win)
+        pygame.display.update()
         
