@@ -41,10 +41,3 @@ def is_int(string):
         return True
     except ValueError:
         return False
-
-
-def check_move(move):
-    if is_int(move) and int(move) > 0 and int(move) < 7:
-        return True
-    else:
-        return False
