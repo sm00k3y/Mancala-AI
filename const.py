@@ -1,6 +1,6 @@
 
 
-# ============= GUI CONSTATNS =================
+# ============= GUI CONSTANTS =================
 FPS = 60
 
 # Board width and height
@@ -11,3 +11,6 @@ HEIGHT = 670
 MARBLE_MOVE_CONST = 5
 
 TEXT_COLOR = (255, 255, 255)
+
+# ============== AI CONSTANTS ==================
+AI_DEPTH = 2

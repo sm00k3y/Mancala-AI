@@ -1,6 +1,7 @@
 import pygame
 from gui.game import Game
-from const import FPS, WIDTH, HEIGHT
+from ai.min_max import MinMax
+from const import FPS, WIDTH, HEIGHT, AI_DEPTH
 
 pygame.init()
 
@@ -14,6 +15,7 @@ def main():
     game_over = False
 
     game = Game(WIN)
+    ai = MinMax()
 
     # Main Game Loop
     while run:
@@ -23,11 +25,15 @@ def main():
             game_over = True
             run = False
 
+        if not game.is_moving_anim and game.top_player:
+            move = ai.find_move(AI_DEPTH, game.gamestate())
+            game.move(pit_number=move)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if not game.top_player and event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 game.move(pos)
                 

@@ -1,6 +1,7 @@
 
 
 def draw_board(a_player, b_player, a_basket, b_basket):
+    print_hint_board()
     print("\n             GAME BOARD")
     print("---------------------------------------")
     print("|      |", end="")
@@ -15,6 +16,23 @@ def draw_board(a_player, b_player, a_basket, b_basket):
         print(f" {b_player[i]} |", end="")
     print("      |")
     print("---------------------------------------\n")
+
+
+def print_hint_board():
+    print("             HINT BOARD")
+    print("---------------------------------------")
+    print("|      |", end="")
+    for i in range(6):
+        print(f" {6 - i} |", end="")
+    print("      |")
+
+    print(f"|      |-----------------------|      |")
+
+    print("|      |", end="")
+    for i in range(6):
+        print(f" {i + 1} |", end="")
+    print("      |")
+    print("---------------------------------------")
 
 
 def is_int(string):

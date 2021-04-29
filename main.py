@@ -1,5 +1,4 @@
-from game.engine import Game
+from gui.main import main
 
 if __name__=="__main__":
-    game = Game()
-    game.start_game()
+    main()

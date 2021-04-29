@@ -3,3 +3,6 @@
 test.py
 todo.txt
 __pycache__/
+build/
+dist/
+main.spec

@@ -19,17 +19,20 @@ class Game:
         if self.board.animation_finished():
             self.is_moving_anim = False
 
-    def move(self, pos):
+    def move(self, pos=(-1, -1), pit_number=-1):
         if self.is_moving_anim == True:
-            return
+            return False
         self.is_moving_anim = True
 
         # Find pit clicked by mouse
-        pit = self.board.get_pit(pos, self.top_player)
+        if pit_number == -1:
+            pit = self.board.get_pit(pos, self.top_player)
+        else:
+            pit = self.board.get_pit_by_number(pit_number, self.top_player)
 
         if pit == None:
-            self.is_moving_anim = False
-            return
+            # self.is_moving_anim = False
+            return False
         
         # Move the marbles
         last_pit = self.move_marbles(pit)
@@ -72,4 +75,7 @@ class Game:
         self.board.draw_board(self.win)
         self.board.draw_game_over(self.win)
         pygame.display.update()
+    
+    def gamestate(self):
+        return self.board.generate_gamestate(self.top_player)
         

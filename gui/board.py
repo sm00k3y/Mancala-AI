@@ -3,6 +3,7 @@ import random
 from gui.pit import Pit
 from const import TEXT_COLOR
 
+
 class Board:
     def __init__(self):
         self.bg = pygame.image.load("gui/img/bg.png")
@@ -59,6 +60,17 @@ class Board:
                 return pit
         return None
 
+    def get_pit_by_number(self, pit_number, top_player):
+        i = 1 if top_player else 8
+        idx = 1
+        
+        for _ in range(len(self.pits)):
+            if idx == pit_number:
+                return self.pits[i]
+            i += 1
+            idx += 1
+        
+
     def animation_finished(self):
         for pit in self.pits:
             for marble in pit.get_marbles():
@@ -93,3 +105,15 @@ class Board:
         self.font.render_to(win, (530, 600), text, TEXT_COLOR)
         self.font.render_to(win, (110, 600), basket_top, TEXT_COLOR)
         self.font.render_to(win, (1390, 600), basket_bot, TEXT_COLOR)
+
+    def generate_gamestate(self, top_player):
+        a_player_basket = self.pits[0].get_marbles_count()
+        a_player_points = []
+        for i in range(1, 7):
+            a_player_points.append(self.pits[i].get_marbles_count())
+        b_player_basket = self.pits[7].get_marbles_count()
+        b_player_points = []
+        for i in range(8, 14):
+            b_player_points.append(self.pits[i].get_marbles_count())
+        
+        return a_player_basket, a_player_points, b_player_basket, b_player_points, top_player
