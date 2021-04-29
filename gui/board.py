@@ -6,25 +6,25 @@ from const import TEXT_COLOR
 
 class Board:
     def __init__(self):
-        self.bg = pygame.image.load("gui/img/bg.png")
+        self.bg = pygame.image.load("assets/bg.png")
         self.pits = self._load_pits()
-        self.font = pygame.freetype.Font("gui/Comic Sans MS 400.ttf", 40)
+        self.font = pygame.freetype.Font("assets/Comic Sans MS 400.ttf", 40)
     
     def _load_pits(self):
         pits = []
-        pits.append(Pit("gui/img/basket.png", True, True, (50, 50), None))
+        pits.append(Pit("assets/basket.png", True, True, (50, 50), None))
 
         x = 230
         y = 50
         for _ in range(6):
-            pits.append(Pit("gui/img/pit.png", True, False, (x, y), pits[-1]))
+            pits.append(Pit("assets/pit.png", True, False, (x, y), pits[-1]))
             x += 180
-        pits.append(Pit("gui/img/basket.png", False, True, (1310, 130), pits[-1]))
+        pits.append(Pit("assets/basket.png", False, True, (1310, 130), pits[-1]))
 
         y += 320
         x -= 180
         for i in range(6):
-            pits.append(Pit("gui/img/pit.png", False, False, (x, y), pits[-1], pits[6-i]))
+            pits.append(Pit("assets/pit.png", False, False, (x, y), pits[-1], pits[6-i]))
             pits[-1].opposite_pit()._opposite = pits[-1]
             x -= 180
 
@@ -79,7 +79,7 @@ class Board:
         return True
 
     def draw_text(self, win, top_player):
-        text = "PLAYER TOP" if top_player else "PLAYER BOTTOM"
+        text = "BOT - AI" if top_player else "PLAYER"
         basket_top = str(self.get_basket(True).get_marbles_count())
         basket_bot = str(self.get_basket(False).get_marbles_count())
         self.font.render_to(win, (630, 600), text, TEXT_COLOR)
@@ -101,7 +101,7 @@ class Board:
     def draw_game_over(self, win):
         basket_top = str(self.get_basket(True).get_marbles_count())
         basket_bot = str(self.get_basket(False).get_marbles_count())
-        text = "GAME OVER, WINNER: PLAYER TOP" if basket_top > basket_bot else "GAME OVER, WINNER: PLAYER BOTTOM"
+        text = "GAME OVER, WINNER: AI" if basket_top > basket_bot else "GAME OVER, WINNER: PLAYER"
         self.font.render_to(win, (530, 600), text, TEXT_COLOR)
         self.font.render_to(win, (110, 600), basket_top, TEXT_COLOR)
         self.font.render_to(win, (1390, 600), basket_bot, TEXT_COLOR)

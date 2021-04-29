@@ -1,4 +1,4 @@
-from gui.main import main
+from gui.main import main_loop
 
 if __name__=="__main__":
-    main()
+    main_loop()

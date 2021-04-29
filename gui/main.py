@@ -8,7 +8,7 @@ pygame.init()
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Mancala")
 
-def main():
+def main_loop():
     clock = pygame.time.Clock()
 
     run = True
@@ -50,4 +50,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main_loop()

@@ -8,7 +8,7 @@ class Game:
         self.board = Board()
         self.is_moving_anim = False
         self.board.prep_anim()
-        self.top_player = True
+        self.top_player = False
 
     def update(self):
         self.board.move_marbles()

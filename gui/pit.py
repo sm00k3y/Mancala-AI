@@ -22,7 +22,7 @@ class Pit:
 
         marbles = []
         for i in range(1, 5):
-            marble = Marble(f"gui/img/marble{i}.png")
+            marble = Marble(f"assets/marble{i}.png")
             marble.rand_position(self.pos, self.size)
             marbles.append(marble)
         return marbles
