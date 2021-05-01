@@ -21,7 +21,7 @@ class MinMax:
         if maximizing_player:
             value = -math.inf
             for move in game_state.possible_moves():
-                temp_state = game_state
+                temp_state = copy.deepcopy(game_state)
                 another_move = temp_state.make_move(move)
                 if another_move:
                     val, _ = self._minmax(temp_state, depth - 1, alpha, beta, maximizing_player)
@@ -41,7 +41,7 @@ class MinMax:
         else:
             value = math.inf
             for move in game_state.possible_moves():
-                temp_state = game_state
+                temp_state = copy.deepcopy(game_state)
                 another_move = temp_state.make_move(move)
                 if another_move:
                     val, _ = self._minmax(temp_state, depth - 1, alpha, beta, maximizing_player)

@@ -1,4 +1,4 @@
-from ai.tools import is_int
+from ai.tools import is_int, draw_board
 
 
 class GameState:
@@ -17,13 +17,14 @@ class GameState:
         self.b_player_basket = b_b
         self.b_player_points = b_p
         self.cur_player = "TOP" if top else "BOTTOM"
+        draw_board(a_p, b_p, a_b, b_b)
 
     def evaluate(self):
         return self.a_player_basket - self.b_player_basket
             
     def possible_moves(self):
         moves = []
-        for i in range(1, 6):
+        for i in range(1, 7):
             if self._check_move(i):
                 moves.append(i)
         return moves
@@ -56,7 +57,7 @@ class GameState:
                 points_left -= 1
             idx += 1
         
-        if idx > -1:  # Nie musi tutaj nawet byc tego ifa
+        if idx > -1:
             self._check_take(table, idx)
         
         return False

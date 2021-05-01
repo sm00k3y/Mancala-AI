@@ -31,7 +31,6 @@ class Game:
             pit = self.board.get_pit_by_number(pit_number, self.top_player)
 
         if pit == None:
-            # self.is_moving_anim = False
             return False
         
         # Move the marbles

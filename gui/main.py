@@ -24,9 +24,9 @@ def main_loop():
         if game.game_over():
             game_over = True
             run = False
-
-        if not game.is_moving_anim and game.top_player:
+        elif not game.is_moving_anim and game.top_player:
             move = ai.find_move(AI_DEPTH, game.gamestate())
+            print(move)
             game.move(pit_number=move)
 
         for event in pygame.event.get():

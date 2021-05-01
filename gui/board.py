@@ -62,15 +62,14 @@ class Board:
 
     def get_pit_by_number(self, pit_number, top_player):
         i = 1 if top_player else 8
-        idx = 1
+        idx = 6
         
         for _ in range(len(self.pits)):
             if idx == pit_number:
                 return self.pits[i]
             i += 1
-            idx += 1
+            idx -= 1
         
-
     def animation_finished(self):
         for pit in self.pits:
             for marble in pit.get_marbles():
@@ -115,5 +114,8 @@ class Board:
         b_player_points = []
         for i in range(8, 14):
             b_player_points.append(self.pits[i].get_marbles_count())
+
+        a_player_points.reverse()
+        b_player_points.reverse()
         
         return a_player_basket, a_player_points, b_player_basket, b_player_points, top_player
