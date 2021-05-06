@@ -13,7 +13,7 @@ class MinMax:
         return top_move
 
     def _minmax(self, game_state, depth, alpha, beta, maximizing_player):
-        if depth == 0 or game_state.game_over:
+        if depth == 0 or game_state.check_game_over():
             return game_state.evaluate(), -1
 
         top_move = -1

@@ -13,6 +13,7 @@ class Pit:
         self._next = next_pit
         self._opposite = opposite
         self.marbles = self._load_marbles()
+        # self.marbles = self._load_marbles_test()
 
     def draw(self, win):
         win.blit(self.img, self.pos)
@@ -24,6 +25,18 @@ class Pit:
         marbles = []
         for i in range(1, 5):
             marble = Marble(f"assets/marble{i}.png")
+            marble.rand_position(self.pos, self.size)
+            marbles.append(marble)
+        return marbles
+
+    # TEST
+    def _load_marbles_test(self):
+        if self.is_basket:
+            return []
+
+        marbles = []
+        if self.number == 1 or self.number == 5:
+            marble = Marble(f"assets/marble1.png")
             marble.rand_position(self.pos, self.size)
             marbles.append(marble)
         return marbles

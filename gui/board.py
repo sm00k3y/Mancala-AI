@@ -121,3 +121,14 @@ class Board:
         b_player_points.reverse()
         
         return a_player_basket, a_player_points, b_player_basket, b_player_points, top_player
+
+    # def apply_test(self):
+    #     top_player_basket = self.get_basket(True)
+    #     for pit in self.pits:
+    #         if pit.top_player and pit.number != 1 and pit.number != 5 and not pit.is_basket:
+    #             for m in pit.get_marbles():
+    #                 top_player_basket.add_marble(m)
+    #             pit.remove_marbles()
+    #         else:
+    #             marb
+

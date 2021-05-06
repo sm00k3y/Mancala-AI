@@ -34,10 +34,10 @@ class GameState:
                (self.cur_player == "BOTTOM" and self.b_player_points[move] != 0)
             
     def make_move(self, move):
-        if self.check_game_over():
-            self.game_over = True
-            self._update_baskets_endgame()
-            return True
+        # if self.check_game_over():
+        #     self.game_over = True
+        #     self._update_baskets_endgame()
+        #     return True
 
         idx = move
         table = self.a_player_points if self.cur_player == "TOP" else self.b_player_points
