@@ -12,19 +12,17 @@ class Board:
     
     def _load_pits(self):
         pits = []
-        pits.append(Pit("assets/basket.png", True, True, (50, 50), None))
+        pits.append(Pit("assets/basket.png", True, True, (50, 50), 6))
 
-        x = 230
-        y = 50
-        for _ in range(6):
-            pits.append(Pit("assets/pit.png", True, False, (x, y), pits[-1]))
-            x += 180
-        pits.append(Pit("assets/basket.png", False, True, (1310, 130), pits[-1]))
-
-        y += 320
-        x -= 180
+        x = 230; y = 50
         for i in range(6):
-            pits.append(Pit("assets/pit.png", False, False, (x, y), pits[-1], pits[6-i]))
+            pits.append(Pit("assets/pit.png", True, False, (x, y), 5-i, pits[-1]))
+            x += 180
+        pits.append(Pit("assets/basket.png", False, True, (1310, 130), 6, pits[-1]))
+
+        y += 320; x -= 180
+        for i in range(6):
+            pits.append(Pit("assets/pit.png", False, False, (x, y), 5-i, pits[-1], pits[6-i]))
             pits[-1].opposite_pit()._opposite = pits[-1]
             x -= 180
 
@@ -61,14 +59,9 @@ class Board:
         return None
 
     def get_pit_by_number(self, pit_number, top_player):
-        i = 1 if top_player else 8
-        idx = 6
-        
-        for _ in range(len(self.pits)):
-            if idx == pit_number:
-                return self.pits[i]
-            i += 1
-            idx -= 1
+        for pit in self.pits:
+            if pit.top_player == top_player and pit.number == pit_number:
+                return pit
         
     def animation_finished(self):
         for pit in self.pits:
@@ -96,6 +89,15 @@ class Board:
             if p.get_marbles_count() > 0:
                 return False
         return True
+    
+    def update_baskets_gameover(self, top_player):
+        pits = [pit for pit in self.pits if pit.top_player != top_player and not pit.is_basket\
+                and pit.get_marbles_count() != 0]
+        basket = self.get_basket(not top_player)
+        for pit in pits:
+            for marble in pit.get_marbles():
+                basket.add_marble(marble)
+            pit.remove_marbles()
 
     def draw_game_over(self, win):
         basket_top = str(self.get_basket(True).get_marbles_count())

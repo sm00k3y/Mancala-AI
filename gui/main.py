@@ -22,6 +22,7 @@ def main_loop():
         clock.tick(FPS)
 
         if game.game_over():
+            game.update_baskets_gameover()
             game_over = True
             run = False
         elif not game.is_moving_anim and game.top_player:

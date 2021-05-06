@@ -3,12 +3,13 @@ from gui.marble import Marble
 
 
 class Pit:
-    def __init__(self, pit_path, top_player, is_basket, pit_pos, next_pit=None, opposite=None):
+    def __init__(self, pit_path, top_player, is_basket, pit_pos, pit_number, next_pit=None, opposite=None):
         self.img = pygame.image.load(pit_path)
         self.size = self.img.get_rect().size
         self.top_player = top_player
         self.is_basket = is_basket
         self.pos = pit_pos
+        self.number = pit_number
         self._next = next_pit
         self._opposite = opposite
         self.marbles = self._load_marbles()

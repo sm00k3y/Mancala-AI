@@ -23,14 +23,14 @@ def print_hint_board():
     print("---------------------------------------")
     print("|      |", end="")
     for i in range(6):
-        print(f" {6 - i} |", end="")
+        print(f" {5 - i} |", end="")
     print("      |")
 
     print(f"|      |-----------------------|      |")
 
     print("|      |", end="")
     for i in range(6):
-        print(f" {i + 1} |", end="")
+        print(f" {i} |", end="")
     print("      |")
     print("---------------------------------------")
 

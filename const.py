@@ -13,4 +13,4 @@ MARBLE_MOVE_CONST = 5
 TEXT_COLOR = (255, 255, 255)
 
 # ============== AI CONSTANTS ==================
-AI_DEPTH = 2
+AI_DEPTH = 4

@@ -24,14 +24,14 @@ class GameState:
             
     def possible_moves(self):
         moves = []
-        for i in range(1, 7):
+        for i in range(6):
             if self._check_move(i):
                 moves.append(i)
         return moves
     
     def _check_move(self, move):
-        return (self.cur_player == "TOP" and self.a_player_points[move - 1] != 0) or \
-               (self.cur_player == "BOTTOM" and self.b_player_points[move - 1] != 0)
+        return (self.cur_player == "TOP" and self.a_player_points[move] != 0) or \
+               (self.cur_player == "BOTTOM" and self.b_player_points[move] != 0)
             
     def make_move(self, move):
         if self.check_game_over():
@@ -39,7 +39,7 @@ class GameState:
             self._update_baskets_endgame()
             return True
 
-        idx = move - 1
+        idx = move
         table = self.a_player_points if self.cur_player == "TOP" else self.b_player_points
         points_left = table[idx]
         table[idx] = 0

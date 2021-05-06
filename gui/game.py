@@ -69,6 +69,9 @@ class Game:
     def game_over(self):
         return self.board.check_game_over(self.top_player)
 
+    def update_baskets_gameover(self):
+        self.board.update_baskets_gameover(self.top_player)
+
     def print_game_over(self):
         self.board.move_marbles()
         self.board.draw_board(self.win)
