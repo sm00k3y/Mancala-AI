@@ -1,14 +1,14 @@
 import pygame
 import random
 from gui.pit import Pit
-from const import TEXT_COLOR
+from const import TEXT_COLOR, FONT, FONT_SIZE
 
 
 class Board:
     def __init__(self):
         self.bg = pygame.image.load("assets/bg.png")
         self.pits = self._load_pits()
-        self.font = pygame.freetype.Font("assets/Comic Sans MS 400.ttf", 40)
+        self.font = pygame.freetype.Font(FONT, FONT_SIZE)
     
     def _load_pits(self):
         pits = []
