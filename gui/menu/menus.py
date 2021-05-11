@@ -1,5 +1,7 @@
 from gui.menu.button import Button
 
+TEXT_COLOR = 52, 0, 103
+
 
 class Menu:
     def __init__(self, state):
@@ -15,13 +17,13 @@ class Menu:
 class PickPlayersMenu(Menu):
     def __init__(self, state):
         super().__init__(state)
-        self.but1 = Button(130, 280, 350, 150, "Player")
-        self.but2 = Button(600, 280, 350, 150, "MiniMax")
-        self.but3 = Button(1050, 280, 350, 150, "AlfaBeta")
+        self.but1 = Button(120, 270, 350, 150, "Player")
+        self.but2 = Button(580, 270, 350, 150, "MiniMax")
+        self.but3 = Button(1040, 270, 350, 150, "AlfaBeta")
 
     def display(self, win, font):
-        text = "Pick Top Player" if self.state.top_player else "Pick Bottom Player"
-        font.render_to(win, (560, 150), text, (30, 30, 200))
+        text = "Top Player" if self.state.top_player else "Bottom Player"
+        font.render_to(win, (640, 150), text, TEXT_COLOR)
         self.but1.draw(win, font)
         self.but2.draw(win, font)
         self.but3.draw(win, font)
@@ -57,18 +59,18 @@ class PickDepthMenu(Menu):
     def __init__(self, state):
         super().__init__(state)
         self.buttons = []
-        self.buttons.append(Button(130, 280, 250, 100, "1"))
-        self.buttons.append(Button(460, 280, 250, 100, "2"))
-        self.buttons.append(Button(790, 280, 250, 100, "3"))
-        self.buttons.append(Button(1120, 280, 250, 100, "4"))
-        self.buttons.append(Button(130, 450, 250, 100, "6"))
-        self.buttons.append(Button(460, 450, 250, 100, "8"))
-        self.buttons.append(Button(790, 450, 250, 100, "10"))
-        self.buttons.append(Button(1120, 450, 250, 100, "12"))
+        self.buttons.append(Button(130, 230, 250, 100, "1"))
+        self.buttons.append(Button(460, 230, 250, 100, "2"))
+        self.buttons.append(Button(790, 230, 250, 100, "3"))
+        self.buttons.append(Button(1120, 230, 250, 100, "4"))
+        self.buttons.append(Button(130, 400, 250, 100, "6"))
+        self.buttons.append(Button(460, 400, 250, 100, "8"))
+        self.buttons.append(Button(790, 400, 250, 100, "10"))
+        self.buttons.append(Button(1120, 400, 250, 100, "12"))
 
     def display(self, win, font):
-        text = "Pick Top AI Depth" if self.state.top_player else "Pick Bottom AI Depth"
-        font.render_to(win, (560, 150), text, (30, 30, 200))
+        text = "Top AI Depth" if self.state.top_player else "Bottom AI Depth"
+        font.render_to(win, (610, 120), text, TEXT_COLOR)
 
         for but in self.buttons:
             but.draw(win, font)
@@ -87,11 +89,11 @@ class PickDepthMenu(Menu):
 class PickHeurMenu(Menu):
     def __init__(self, state):
         super().__init__(state)
-        self.heur1 = Button(550, 280, 350, 150, "Default")
+        self.heur1 = Button(570, 280, 350, 150, "Default")
 
     def display(self, win, font):
         text = "Pick Heuristic for Top AI" if self.state.top_player else "Pick Heuristic fot Bottom AI"
-        font.render_to(win, (560, 150), text, (30, 30, 200))
+        font.render_to(win, (520, 150), text, TEXT_COLOR)
 
         self.heur1.draw(win, font)
 

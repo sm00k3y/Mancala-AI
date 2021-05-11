@@ -70,6 +70,11 @@ class Game:
                     if (engine.top_player and player1 == None) or (not engine.top_player and player2 == None):
                         pos = pygame.mouse.get_pos()
                         engine.move(pos)
+
+                # Key Pressed
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        run = False
                     
             engine.update()
 

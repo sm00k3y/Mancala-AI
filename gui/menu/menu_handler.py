@@ -41,12 +41,12 @@ class MenuHandler:
     def run(self):
         while self.running:
             CLOCK.tick(FPS)
-            WIN.fill((54, 54, 54))
-            WIN.blit(BG, (5, 70))
+            WIN.fill((0, 0, 0))
+            WIN.blit(BG, (0, 0))
             text = "Welcome to Mancala!"
-            font.render_to(WIN, (530, 30), text, TEXT_COLOR)
-            text = "Press ESC to go back"
-            small_font.render_to(WIN, (1220, 70), text, TEXT_COLOR)
+            font.render_to(WIN, (530, 600), text, TEXT_COLOR)
+            text = "Press ESC to quit"
+            small_font.render_to(WIN, (1250, 580), text, TEXT_COLOR)
 
             for event in pygame.event.get():
                 # Exit

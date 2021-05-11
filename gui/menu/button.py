@@ -4,7 +4,7 @@ from const import TEXT_COLOR
 
 class Button:
     def __init__(self, x, y, width, height, text=""):
-        self.color = (54, 54, 54)
+        self.color = (39, 0, 78)
         self.x = x
         self.y = y
         self.width = width
@@ -13,6 +13,7 @@ class Button:
         self.text = text
     
     def draw(self, win, font):
+        # pygame.draw.rect(win, (0, 0, 0), (self.x-3, self.y-3, self.width+6, self.height+6), border_radius=40)
         pygame.draw.rect(win, self.color, self.size_pos, border_radius=40)
         if self.text != "":
             text = font.render(self.text, TEXT_COLOR)
