@@ -1,9 +1,10 @@
 from gui.menu.menu_handler import MenuHandler
+from gui.game import Game
+
 
 # Run the game
 def run():
     menu = MenuHandler()
-    # game = Game()
 
     while True:
         menu.run()
@@ -11,4 +12,6 @@ def run():
         print(params)
         if params[-1] == False:
             break
-        # game.run(params)
+        game = Game(params[:-1])
+        game.run()
+        menu.reset()

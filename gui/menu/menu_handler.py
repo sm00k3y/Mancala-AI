@@ -65,9 +65,27 @@ class MenuHandler:
             
             self.current_menu.display(WIN, font)
             pygame.display.update()
-    
+        
     def get_params(self):
         params = self.player1, self.alpha_beta_1, self.depth_1, self.heur1, \
                  self.player2, self.alpha_beta_2, self.depth_2, self.heur2, \
                  self.both_initialized
         return params
+
+    def reset(self):
+        self.player1 = True
+        self.alpha_beta_1 = False
+        self.depth_1 = -1
+        self.heur1 = 0
+
+        self.player2 = True
+        self.alpha_beta_2 = False
+        self.depth_2 = -1
+        self.heur2 = 0
+
+        self.top_player = True
+        self.both_initialized = False
+
+        self.running = True
+        self.current_menu = self.pick_player
+    

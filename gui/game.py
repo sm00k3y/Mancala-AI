@@ -1,83 +1,82 @@
 import pygame
-import pygame.freetype
-from gui.board import Board
+from gui.engine import Engine
+from ai.min_max import MinMax
+from const import WIDTH, HEIGHT, FPS, FONT, FONT_SIZE, SMALL_FONT_SIZE, AI_DEPTH
+from gui.exceptions import ParametersNotInitializedException
+
+
+# Pygame initialization
+pygame.init()
+WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Mancala")
+CLOCK = pygame.time.Clock()
+
+BG = pygame.image.load("assets/bg.png")
+font = pygame.freetype.Font(FONT, FONT_SIZE)
+small_font = pygame.freetype.Font(FONT, SMALL_FONT_SIZE)
+
 
 class Game:
-    def __init__(self, win):
-        self.win = win
-        self.board = Board()
-        self.is_moving_anim = False
-        self.board.prep_anim()
-        self.top_player = False
+    def __init__(self, params):
+        if len(params) != 8:
+            raise ParametersNotInitializedException
+        self.player1 = params[0]
+        self.alpha_beta1 = params[1]
+        self.depth1 = params[2]
+        self.heur1 = params[3]
+        self.player2 = params[4]
+        self.alpha_beta2 = params[5]
+        self.depth2 = params[6]
+        self.heur2 = params[7]
 
-    def update(self):
-        self.board.move_marbles()
-        self.board.draw_board(self.win)
-        self.board.draw_text(self.win, self.top_player)
-        pygame.display.update()
+    def run(self):
+        run = True
+        game_over = False
 
-        if self.board.animation_finished():
-            self.is_moving_anim = False
+        engine = Engine(WIN)
+        player1 = None  # Human by default
+        player2 = None  # Human by default
 
-    def move(self, pos=(-1, -1), pit_number=-1):
-        if self.is_moving_anim == True:
-            return False
-        self.is_moving_anim = True
+        if not self.player1:
+            player1 = MinMax(self.alpha_beta1, self.depth1, self.heur1)
 
-        # Find pit clicked by mouse
-        if pit_number == -1:
-            pit = self.board.get_pit(pos, self.top_player)
-        else:
-            pit = self.board.get_pit_by_number(pit_number, self.top_player)
+        if not self.player2:
+            player2 = MinMax(self.alpha_beta2, self.depth2, self.heur2)
 
-        if pit == None:
-            return False
-        
-        # Move the marbles
-        last_pit = self.move_marbles(pit)
+        # Main Game Loop
+        while run:
+            CLOCK.tick(FPS)
 
-        # Check take (zbicie)
-        self.check_take(last_pit)
-            
-        # Change move if the last pit was not a player's basket
-        if not (last_pit.is_basket and last_pit.top_player == self.top_player):
-            self.top_player = not self.top_player
+            if engine.game_over():
+                engine.update_baskets_gameover()
+                game_over = True
+                run = False
+                break
 
-    # Moves marbles and returns last pit
-    def move_marbles(self, pit):
-        marbles = pit.get_marbles()
-        pit.remove_marbles()
-        for i in range(len(marbles)):
-            pit = pit.next_pit()
-            if pit.is_basket and pit.top_player != self.top_player:
-                pit = pit.next_pit()
-            pit.add_marble(marbles[i])
-        return pit
+            if not engine.is_moving_anim and engine.top_player and player1 != None:
+                move = player1.find_move(engine.gamestate())
+                print(move)
+                engine.move(pit_number=move)
+            elif not engine.is_moving_anim and not engine.top_player and player2 != None:
+                move = player2.find_move(engine.gamestate())
+                print(move)
+                engine.move(pit_number=move)
 
-    def check_take(self, pit):
-        cond = (pit.top_player == self.top_player and pit.get_marbles_count() == 1 and
-                not pit.is_basket and pit.opposite_pit().get_marbles_count() != 0)
-        if cond:
-            self.board.get_basket(self.top_player).add_marble(pit.get_marbles()[0])
-            pit.remove_marbles()
-            opposite_pit = pit.opposite_pit()
-            opposite_marbles = opposite_pit.get_marbles()
-            opposite_pit.remove_marbles()
-            for m in opposite_marbles:
-                self.board.get_basket(self.top_player).add_marble(m)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
 
-    def game_over(self):
-        return self.board.check_game_over(self.top_player)
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if (engine.top_player and player1 == None) or (not engine.top_player and player2 == None):
+                        pos = pygame.mouse.get_pos()
+                        engine.move(pos)
+                    
+            engine.update()
 
-    def update_baskets_gameover(self):
-        self.board.update_baskets_gameover(self.top_player)
+        # Print Game Over Screen until closed or mouse press
+        while game_over:
+            engine.print_game_over()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT or event.type == pygame.MOUSEBUTTONDOWN:
+                    game_over = False
 
-    def print_game_over(self):
-        self.board.move_marbles()
-        self.board.draw_board(self.win)
-        self.board.draw_game_over(self.win)
-        pygame.display.update()
-    
-    def gamestate(self):
-        return self.board.generate_gamestate(self.top_player)
-        

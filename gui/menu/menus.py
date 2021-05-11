@@ -48,7 +48,7 @@ class PickPlayersMenu(Menu):
                 self.state.player1 = False
                 self.state.alpha_beta_1 = True
             else:
-                self.state.palyer2 = False
+                self.state.player2 = False
                 self.state.alpha_beta_2 = True
             self.state.current_menu = self.state.pick_depth
 

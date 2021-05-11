@@ -4,12 +4,15 @@ import copy
 
 
 class MinMax:
-    def __init__(self):
+    def __init__(self, alpha_beta=True, depth=2, heuristic=1):
         self.gamestate = GameState()
+        self.alpha_beta = alpha_beta
+        self.depth = depth
+        self.heur = heuristic
 
-    def find_move(self, depth, game_state):
+    def find_move(self, game_state):
         self.gamestate.update(game_state)
-        _, top_move = self._minmax(self.gamestate, depth, -math.inf, math.inf, game_state[-1])
+        _, top_move = self._minmax(self.gamestate, self.depth, -math.inf, math.inf, game_state[-1])
         return top_move
 
     def _minmax(self, game_state, depth, alpha, beta, maximizing_player):
@@ -34,9 +37,10 @@ class MinMax:
                     if val > value:
                         value = val
                         top_move = move
-                alpha = max(alpha, value)
-                if alpha >= beta:
-                    break
+                if self.alpha_beta:
+                    alpha = max(alpha, value)
+                    if alpha >= beta:
+                        break
             return value, top_move
         else:
             value = math.inf
@@ -54,8 +58,9 @@ class MinMax:
                     if val < value:
                         value = val
                         top_move = move
-                beta = min(beta, value)
-                if beta <= alpha:
-                    break
+                if self.alpha_beta:
+                    beta = min(beta, value)
+                    if beta <= alpha:
+                        break
             return value, top_move
         
