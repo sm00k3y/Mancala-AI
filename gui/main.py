@@ -9,7 +9,7 @@ def run():
     while True:
         menu.run()
         params = menu.get_params()
-        print(params)
+        # print(params)
         if params[-1] == False:
             break
         game = Game(params[:-1])

@@ -37,7 +37,7 @@ class Board:
         marbles = []
         
         for pit in self.pits:
-            pit.draw(win)
+            pit.draw(win, self.font)
             marbles += pit.get_marbles()
 
         for m in marbles:
@@ -71,10 +71,10 @@ class Board:
         return True
 
     def draw_text(self, win, top_player):
-        text = "BOT - AI" if top_player else "PLAYER"
+        text = "TOP PLAYER" if top_player else "BOTTOM PLAYER"
         basket_top = str(self.get_basket(True).get_marbles_count())
         basket_bot = str(self.get_basket(False).get_marbles_count())
-        self.font.render_to(win, (630, 600), text, TEXT_COLOR)
+        self.font.render_to(win, (610, 600), text, TEXT_COLOR)
         self.font.render_to(win, (110, 600), basket_top, TEXT_COLOR)
         self.font.render_to(win, (1390, 600), basket_bot, TEXT_COLOR)
     
@@ -102,8 +102,8 @@ class Board:
     def draw_game_over(self, win):
         basket_top = str(self.get_basket(True).get_marbles_count())
         basket_bot = str(self.get_basket(False).get_marbles_count())
-        text = "GAME OVER, WINNER: AI" if basket_top > basket_bot else "GAME OVER, WINNER: PLAYER"
-        self.font.render_to(win, (530, 600), text, TEXT_COLOR)
+        text = "GAME OVER, WINNER: TOP PLAYER" if basket_top > basket_bot else "GAME OVER, WINNER: BOTTOM PLAYER"
+        self.font.render_to(win, (350, 600), text, TEXT_COLOR)
         self.font.render_to(win, (110, 600), basket_top, TEXT_COLOR)
         self.font.render_to(win, (1390, 600), basket_bot, TEXT_COLOR)
 
@@ -121,14 +121,4 @@ class Board:
         b_player_points.reverse()
         
         return a_player_basket, a_player_points, b_player_basket, b_player_points, top_player
-
-    # def apply_test(self):
-    #     top_player_basket = self.get_basket(True)
-    #     for pit in self.pits:
-    #         if pit.top_player and pit.number != 1 and pit.number != 5 and not pit.is_basket:
-    #             for m in pit.get_marbles():
-    #                 top_player_basket.add_marble(m)
-    #             pit.remove_marbles()
-    #         else:
-    #             marb
 

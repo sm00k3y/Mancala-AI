@@ -44,7 +44,7 @@ class MenuHandler:
             WIN.fill((0, 0, 0))
             WIN.blit(BG, (0, 0))
             text = "Welcome to Mancala!"
-            font.render_to(WIN, (530, 600), text, TEXT_COLOR)
+            font.render_to(WIN, (570, 600), text, TEXT_COLOR)
             text = "Press ESC to quit"
             small_font.render_to(WIN, (1250, 580), text, TEXT_COLOR)
 

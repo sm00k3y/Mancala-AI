@@ -1,6 +1,7 @@
 import math
 from ai.engine import GameState
 import copy
+import time
 
 
 class MinMax:
@@ -9,13 +10,29 @@ class MinMax:
         self.alpha_beta = alpha_beta
         self.depth = depth
         self.heur = heuristic
+        self.visited_nodes = 0
+        self.sum_time = 0
 
     def find_move(self, game_state):
+        # Update current gamestate
         self.gamestate.update(game_state)
+
+        # Start measuring time
+        start = time.time()
+
+        # MiniMax recursive call
         _, top_move = self._minmax(self.gamestate, self.depth, -math.inf, math.inf, game_state[-1])
+
+        # End of time measure
+        end = time.time()
+        self.sum_time += (end - start)
+
+        # Return top move found by MiniMax
         return top_move
 
     def _minmax(self, game_state, depth, alpha, beta, maximizing_player):
+        self.visited_nodes += 1
+
         if depth == 0 or game_state.check_game_over():
             return game_state.evaluate(), -1
 

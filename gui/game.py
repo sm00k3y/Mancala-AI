@@ -78,10 +78,17 @@ class Game:
                     
             engine.update()
 
+        if player1:
+            print("\nPlayer 1 visited:", player1.visited_nodes, "nodes, and took", player1.sum_time, "s time")
+        if player2:
+            print("Player 2 visited:", player2.visited_nodes, "nodes, and took", player2.sum_time, "s time")
+
         # Print Game Over Screen until closed or mouse press
         while game_over:
             engine.print_game_over()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT or event.type == pygame.MOUSEBUTTONDOWN:
+                    game_over = False
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     game_over = False
 

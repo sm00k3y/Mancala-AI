@@ -8,7 +8,7 @@ class Engine:
         self.board = Board()
         self.is_moving_anim = False
         self.board.prep_anim()
-        self.top_player = False
+        self.top_player = True
 
     def update(self):
         self.board.move_marbles()

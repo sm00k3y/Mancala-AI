@@ -1,5 +1,6 @@
 import pygame
 from gui.marble import Marble
+from const import TEXT_COLOR
 
 
 class Pit:
@@ -15,8 +16,14 @@ class Pit:
         self.marbles = self._load_marbles()
         # self.marbles = self._load_marbles_test()
 
-    def draw(self, win):
+    def draw(self, win, font):
         win.blit(self.img, self.pos)
+        if not self.is_basket:
+            text = str(self.get_marbles_count())
+            if self.top_player:
+                font.render_to(win, (self.pos[0] + 70, self.pos[1] + 180), text, TEXT_COLOR)
+            else:
+                font.render_to(win, (self.pos[0] + 70, self.pos[1] - 50), text, TEXT_COLOR)
 
     def _load_marbles(self):
         if self.is_basket:
